@@ -6,11 +6,6 @@ import play.api.{Application, ApplicationLoader, BuiltInComponentsFromContext, C
 import scala.concurrent.ExecutionContext
 import router.Routes
 
-@SuppressWarnings(Array(
-  // This is the 'end of the world' (or more the beginning), if anything fails here, the app crashes immediately, which is what we want to happen.
-  "org.danielnixon.playwarts.GenMapLikePartial",
-  // This is the 'end of the world', exclusively here it's fine to get a reference to the Play Global execution context.
-  "org.danielnixon.playwarts.PlayGlobalExecutionContext"))
 class AppLoader extends ApplicationLoader {
 
   implicit val ec: ExecutionContext = play.api.libs.concurrent.Execution.defaultContext
@@ -21,26 +16,13 @@ class AppLoader extends ApplicationLoader {
     }
 
 
-
     val components: AppComponents = new AppComponents(context)
-    //    if (context.initialConfiguration.underlying.getBoolean("discovery.enabled")) {
-    //     do sthg
-    //    }
-    //    if (context.initialConfiguration.underlying.getBoolean("XXX")) {
-    //      start service
-    //      components.applicationLifecycle.addStopHook { () =>
-    //        Future(stop service)
-    //      }
-    //    }
+
     components.application
   }
 
 }
 
-@SuppressWarnings(Array(
-  // This is the 'end of the world' (or more the beginning), if anything fails here, the app crashes immediately, which is what we want to happen.
-  "org.danielnixon.playwarts.GenMapLikePartial",
-  "org.brianmckenna.wartremover.warts.Throw"))
 class AppComponents(context: Context)(implicit val ec: ExecutionContext) extends BuiltInComponentsFromContext(context)
   with EhCacheComponents {
 
