@@ -1,7 +1,8 @@
-import controllers.{Assets, AsyncController, CountController, HomeController}
+import controllers._
 import play.api.ApplicationLoader.Context
 import play.api.cache.EhCacheComponents
 import play.api.{Application, ApplicationLoader, BuiltInComponentsFromContext, Configuration, LoggerConfigurator}
+import play.modules.reactivemongo.DefaultReactiveMongoApi
 
 import scala.concurrent.ExecutionContext
 import router.Routes
@@ -36,6 +37,9 @@ class AppComponents(context: Context)(implicit val ec: ExecutionContext) extends
   lazy val countController = new CountController(services.AtomicCounter)
   lazy val asyncController = new AsyncController(actorSystem)
 
+  lazy val reactiveMongoApi = new DefaultReactiveMongoApi(context.initialConfiguration, applicationLifecycle)
+  lazy val myFirstController = new MyFirstController(reactiveMongoApi)
+
   lazy val assetsController: Assets = new Assets(httpErrorHandler)
 
   // order matters - should be the same as routes file
@@ -44,6 +48,7 @@ class AppComponents(context: Context)(implicit val ec: ExecutionContext) extends
     homeController,
     countController,
     asyncController,
+    myFirstController,
     assetsController)
 
 }
