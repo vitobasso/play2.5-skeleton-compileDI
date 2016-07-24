@@ -1,4 +1,4 @@
-@(modelForm: Form[models.Candidate])
+@(form: Form[models.Candidate])(implicit messages: Messages)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,13 +14,10 @@
         <h2> Save Candidate </h2>
 
         <form action="@controllers.routes.MyFirstController.post" method="post">
-          Name:<br>
-          <input type="text" name="name"><br>
-          Email:<br>
-          <input type="text" name="email"><br>
-          Skype:<br>
-          <input type="text" name="skype"><br>
-          <button type="submit">Save</button>
+            @helper.inputText(form("name"))
+            @helper.inputText(form("email"))
+            @helper.inputText(form("skype"))
+            <button type="submit">Save</button>
         </form>
 
     </body>

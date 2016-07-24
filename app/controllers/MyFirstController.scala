@@ -4,14 +4,20 @@ import models.{Candidate, Contact, Experience, Profile}
 import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, Controller}
 import play.modules.reactivemongo.{MongoController, ReactiveMongoApi, ReactiveMongoComponents}
 import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class MyFirstController(val reactiveMongoApi: ReactiveMongoApi)(implicit ec: ExecutionContext)
-  extends Controller with MongoController with ReactiveMongoComponents {
+class MyFirstController(implicit ec: ExecutionContext,
+                        val messagesApi: MessagesApi,
+                        val reactiveMongoApi: ReactiveMongoApi)
+  extends Controller
+    with MongoController
+    with ReactiveMongoComponents
+    with I18nSupport {
 
   def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("candidates"))
 
