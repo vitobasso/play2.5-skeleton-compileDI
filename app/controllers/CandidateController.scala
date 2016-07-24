@@ -11,9 +11,8 @@ import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class MyFirstController(implicit ec: ExecutionContext,
-                        val messagesApi: MessagesApi,
-                        val reactiveMongoApi: ReactiveMongoApi)
+class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: ReactiveMongoApi)
+                         (implicit ec: ExecutionContext)
   extends Controller
     with MongoController
     with ReactiveMongoComponents
@@ -55,7 +54,7 @@ class MyFirstController(implicit ec: ExecutionContext,
   def get = Action.async {
     implicit request =>
       Future.successful(
-        Ok(views.html.mongoform(candidateForm))
+        Ok(views.html.candidateForm(candidateForm))
       )
   }
 
@@ -65,7 +64,7 @@ class MyFirstController(implicit ec: ExecutionContext,
         formWIthErrors => {
           Logger.error("form has errors")
           Future.successful(
-            BadRequest(views.html.mongoform(candidateForm))
+            BadRequest(views.html.candidateForm(candidateForm))
           )
         },
         candidate => {

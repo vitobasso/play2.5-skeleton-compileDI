@@ -30,22 +30,16 @@ class AppComponents(context: Context)(implicit val ec: ExecutionContext)
   implicit val scheduler = actorSystem.scheduler
 
   lazy val langs: DefaultLangs = new DefaultLangs(configuration)
-  implicit lazy val messageApi = new DefaultMessagesApi(environment, configuration, langs)
-  implicit lazy val reactiveMongoApi = new DefaultReactiveMongoApi(context.initialConfiguration, applicationLifecycle)
+  lazy val messageApi = new DefaultMessagesApi(environment, configuration, langs)
+  lazy val reactiveMongoApi = new DefaultReactiveMongoApi(context.initialConfiguration, applicationLifecycle)
 
-  lazy val homeController = new HomeController
-  lazy val countController = new CountController(services.AtomicCounter)
-  lazy val asyncController = new AsyncController(actorSystem)
-  lazy val myFirstController = new MyFirstController
+  lazy val candidateController = new CandidateController(messageApi, reactiveMongoApi)
   lazy val assetsController: Assets = new Assets(httpErrorHandler)
 
   // order matters - should be the same as routes file
   lazy val router = new Routes(
     httpErrorHandler,
-    homeController,
-    countController,
-    asyncController,
-    myFirstController,
+    candidateController,
     assetsController)
 
 }
