@@ -38,6 +38,12 @@ object Status {
     case "Withdrew" => Withdrew
   }
 
+  val values = List(Applied,
+    FirstInterview_Invited, FirstInterview_Accepted, FirstInterview_Rejected,
+    CodeReview_Invited, CodeReview_Accepted, CodeReview_Rejected,
+    SecondInterview_Invited, SecondInterview_Accepted, SecondInterview_Rejected,
+    Hired, Withdrew)
+
   implicit def statusFormat: Formatter[Status] = new Formatter[Status] {
 
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Status] =

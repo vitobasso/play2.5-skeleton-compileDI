@@ -1,7 +1,6 @@
 package controllers
 
 import models.{Candidate, Contact, Experience, Profile}
-import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -22,20 +21,20 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
 
   val candidateForm: Form[Candidate] = Form(mapping(
     "profile" -> mapping(
-      "name" -> text,
+      "name" -> nonEmptyText,
       "age" -> number,
       "country" -> text,
       "euWorker" -> boolean,
       "availability" -> text,
       "expectedSalary" -> text
     )(Profile.apply)(Profile.unapply),
-    "Contact" -> mapping(
-      "email" -> text,
+    "contact" -> mapping(
+      "email" -> nonEmptyText,
       "skype" -> optional(text),
       "phone" -> optional(text),
       "codeRepo" -> optional(text)
     )(Contact.apply)(Contact.unapply),
-    "Experience" -> mapping(
+    "experience" -> mapping(
       "csEducation" -> text,
       "commercial" -> text,
       "consulting" -> text,
@@ -61,8 +60,7 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
   def post = Action.async {
     implicit request =>
       candidateForm.bindFromRequest().fold(
-        formWIthErrors => {
-          Logger.error("form has errors")
+        formWithErrors => {
           Future.successful(
             BadRequest(views.html.candidateForm(candidateForm))
           )
