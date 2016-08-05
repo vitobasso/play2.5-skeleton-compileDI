@@ -10,5 +10,5 @@ case class Candidate(
                     )
 
 object Candidate {
-  implicit val candidateJsonFormat = Json.format[Candidate]
+  implicit val jsonFormat = Json.format[Candidate]
 }

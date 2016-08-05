@@ -13,9 +13,11 @@ case class Experience(
                        designPatterns: String,
                        concurrency: String,
                        teamWorking: String,
-                       soloWorking: String
+                       soloWorking: String,
+                       architectureAndDesign: String,
+                       teamLeading: String
                      )
 
 object Experience {
-  implicit val experienceJsonFormat = Json.format[Experience]
+  implicit val jsonFormat = Json.format[Experience]
 }

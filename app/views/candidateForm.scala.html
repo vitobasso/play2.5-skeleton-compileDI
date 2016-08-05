@@ -1,4 +1,4 @@
-@import helper.{inputText, options, select}
+@import helper.{checkbox, inputText, options, select}
 @import models._
 @(cForm: Form[Candidate])(implicit messages: Messages)
 
@@ -19,9 +19,11 @@
             @inputText(cForm("profile.name"))
             @inputText(cForm("profile.age"))
             @inputText(cForm("profile.country"))
-            @inputText(cForm("profile.euWorker"))
+            @checkbox(cForm("profile.euWorker"))
             @inputText(cForm("profile.availability"))
             @inputText(cForm("profile.expectedSalary"))
+            @inputText(cForm("profile.ambition"))
+            @inputText(cForm("profile.travel"))
 
             @inputText(cForm("contact.email"))
             @inputText(cForm("contact.skype"))
@@ -39,6 +41,8 @@
             @inputText(cForm("experience.concurrency"))
             @inputText(cForm("experience.teamWorking"))
             @inputText(cForm("experience.soloWorking"))
+            @inputText(cForm("experience.architectureAndDesign"))
+            @inputText(cForm("experience.teamLeading"))
 
             @select(cForm("status"), options(Status.values.map(_.toString)))
 

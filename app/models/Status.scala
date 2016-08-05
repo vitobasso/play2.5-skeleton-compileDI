@@ -57,7 +57,7 @@ object Status {
 
   }
 
-  implicit val formatStatus: Format[Status] = Format(
+  implicit val jsonFormat: Format[Status] = Format(
     Reads(json => JsSuccess(Status.fromString(json.toString()))),
     Writes(status => JsString(status.toString)))
 

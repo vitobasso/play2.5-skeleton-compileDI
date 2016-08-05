@@ -3,6 +3,7 @@ package controllers
 import models.{Candidate, Contact, Experience, Profile}
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.format.Formats._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, Controller}
 import play.modules.reactivemongo.{MongoController, ReactiveMongoApi, ReactiveMongoComponents}
@@ -25,11 +26,13 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
       "age" -> number,
       "country" -> text,
       "euWorker" -> boolean,
-      "availability" -> text,
-      "expectedSalary" -> text
+      "availability" -> of(jodaLocalDateFormat("dd-MM-yyyy")),
+      "expectedSalary" -> text,
+      "ambition" -> text,
+      "travel" -> text
     )(Profile.apply)(Profile.unapply),
     "contact" -> mapping(
-      "email" -> nonEmptyText,
+      "email" -> nonEmptyText.verifying(hasEmailFormat),
       "skype" -> optional(text),
       "phone" -> optional(text),
       "codeRepo" -> optional(text)
@@ -45,10 +48,14 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
       "designPatterns" -> text,
       "concurrency" -> text,
       "teamWorking" -> text,
-      "soloWorking" -> text
+      "soloWorking" -> text,
+      "architectureAndDesign" -> text,
+      "teamLeading" -> text
     )(Experience.apply)(Experience.unapply),
     "status" -> of[models.Status]
   )(Candidate.apply)(Candidate.unapply))
+
+  def hasEmailFormat: String => Boolean = _ matches "^[\\w\\d._%+-]+@[\\w\\d.-]+\\.[\\w]{2,}$"
 
   def get = Action.async {
     implicit request =>

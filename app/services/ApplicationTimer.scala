@@ -1,9 +1,10 @@
 package services
 
 import java.time.{Clock, Instant}
-import javax.inject._
+
 import play.api.Logger
 import play.api.inject.ApplicationLifecycle
+
 import scala.concurrent.Future
 
 /**
@@ -16,7 +17,7 @@ import scala.concurrent.Future
  * This class needs to run code when the server stops. It uses the
  * application's [[ApplicationLifecycle]] to register a stop hook.
  */
-
+//TODO delete if not used
 class ApplicationTimer (clock: Clock, appLifecycle: ApplicationLifecycle) {
 
   // This code is called when the application starts.

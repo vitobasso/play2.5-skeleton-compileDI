@@ -1,5 +1,6 @@
 package models
 
+import org.joda.time.LocalDate
 import play.api.libs.json.Json
 
 case class Profile(
@@ -7,10 +8,12 @@ case class Profile(
                     age: Int,
                     country: String,
                     euWorker: Boolean,
-                    availability: String,
-                    expectedSalary: String
+                    availability: LocalDate,
+                    expectedSalary: String,
+                    ambition: String,
+                    travel: String
                   )
 
 object Profile {
-  implicit val profileJsonFormat = Json.format[Profile]
+  implicit val jsonFormat = Json.format[Profile]
 }
