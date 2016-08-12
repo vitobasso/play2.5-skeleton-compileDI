@@ -1,3 +1,9 @@
+form.title=Candidate Form
+form.profile=Personal Data
+form.contact=Contact Information
+form.experience=Education & Experience
+form.submit=Submit
+
 profile.name=Name
 profile.age=Age
 profile.country=Country

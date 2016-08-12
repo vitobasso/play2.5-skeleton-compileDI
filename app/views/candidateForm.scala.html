@@ -5,49 +5,58 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Save Candidate</title>
+        <title>@Messages("form.title")</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
     </head>
     <body>
 
-        <h2> Save Candidate </h2>
+        <h2>@Messages("form.title")</h2>
 
         <form action="@controllers.routes.CandidateController.post" method="post">
 
-            @inputText(cForm("profile.name"))
-            @inputText(cForm("profile.age"))
-            @inputText(cForm("profile.country"))
-            @checkbox(cForm("profile.euWorker"))
-            @inputText(cForm("profile.availability"))
-            @inputText(cForm("profile.initialContactDate"))
-            @inputText(cForm("profile.expectedSalary"))
-            @inputText(cForm("profile.ambition"))
-            @inputText(cForm("profile.travel"))
+            <fieldset>
+                <legend>@Messages("form.profile")</legend>
+                @inputText(cForm("profile.name"))
+                @inputText(cForm("profile.age"))
+                @inputText(cForm("profile.country"))
+                @checkbox(cForm("profile.euWorker"))
+                @inputText(cForm("profile.availability"))
+                @inputText(cForm("profile.initialContactDate"))
+                @inputText(cForm("profile.expectedSalary"))
+                @inputText(cForm("profile.ambition"))
+                @inputText(cForm("profile.travel"))
+            </fieldset>
 
-            @inputText(cForm("contact.email"))
-            @inputText(cForm("contact.skype"))
-            @inputText(cForm("contact.phone"))
-            @inputText(cForm("contact.codeRepo"))
+            <fieldset>
+                <legend>@Messages("form.contact")</legend>
+                @inputText(cForm("contact.email"))
+                @inputText(cForm("contact.skype"))
+                @inputText(cForm("contact.phone"))
+                @inputText(cForm("contact.codeRepo"))
+            </fieldset>
 
-            @inputText(cForm("experience.csEducation"))
-            @inputText(cForm("experience.commercial"))
-            @inputText(cForm("experience.consulting"))
-            @inputText(cForm("experience.java"))
-            @inputText(cForm("experience.scala"))
-            @inputText(cForm("experience.multipleLanguages"))
-            @inputText(cForm("experience.functional"))
-            @inputText(cForm("experience.designPatterns"))
-            @inputText(cForm("experience.concurrency"))
-            @inputText(cForm("experience.teamWorking"))
-            @inputText(cForm("experience.soloWorking"))
-            @inputText(cForm("experience.architectureAndDesign"))
-            @inputText(cForm("experience.teamLeading"))
+            <fieldset>
+                <legend>@Messages("form.experience")</legend>
+                @inputText(cForm("experience.csEducation"))
+                @inputText(cForm("experience.commercial"))
+                @inputText(cForm("experience.consulting"))
+                @inputText(cForm("experience.java"))
+                @inputText(cForm("experience.scala"))
+                @inputText(cForm("experience.multipleLanguages"))
+                @inputText(cForm("experience.functional"))
+                @inputText(cForm("experience.designPatterns"))
+                @inputText(cForm("experience.concurrency"))
+                @inputText(cForm("experience.teamWorking"))
+                @inputText(cForm("experience.soloWorking"))
+                @inputText(cForm("experience.architectureAndDesign"))
+                @inputText(cForm("experience.teamLeading"))
+                @select(cForm("status"), options(Status.values.map(_.toString)))
+            </fieldset>
 
-            @select(cForm("status"), options(Status.values.map(_.toString)))
+            <button type="submit">@Messages("form.submit")</button>
 
-            <button type="submit">Save</button>
         </form>
 
     </body>
