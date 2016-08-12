@@ -23,20 +23,23 @@ case object Withdrew extends Status
 
 object Status {
 
-  def fromString(string: String): Status = string match {
-    case "Applied" => Applied
-    case "FirstInterview_Invited" => FirstInterview_Invited
-    case "FirstInterview_Accepted" => FirstInterview_Accepted
-    case "FirstInterview_Rejected" => FirstInterview_Rejected
-    case "CodeReview_Invited" => CodeReview_Invited
-    case "CodeReview_Accepted" => CodeReview_Accepted
-    case "CodeReview_Rejected" => CodeReview_Rejected
-    case "SecondInterview_Invited" => SecondInterview_Invited
-    case "SecondInterview_Accepted" => SecondInterview_Accepted
-    case "SecondInterview_Rejected" => SecondInterview_Rejected
-    case "Hired" => Hired
-    case "Withdrew" => Withdrew
-  }
+  def fromString(string: String): Status =
+    string
+      .replaceAll("\"", "") // workaround reactivemongo json de-serializer giving strings with quotes
+      match {
+        case "Applied" => Applied
+        case "FirstInterview_Invited" => FirstInterview_Invited
+        case "FirstInterview_Accepted" => FirstInterview_Accepted
+        case "FirstInterview_Rejected" => FirstInterview_Rejected
+        case "CodeReview_Invited" => CodeReview_Invited
+        case "CodeReview_Accepted" => CodeReview_Accepted
+        case "CodeReview_Rejected" => CodeReview_Rejected
+        case "SecondInterview_Invited" => SecondInterview_Invited
+        case "SecondInterview_Accepted" => SecondInterview_Accepted
+        case "SecondInterview_Rejected" => SecondInterview_Rejected
+        case "Hired" => Hired
+        case "Withdrew" => Withdrew
+      }
 
   val values = List(Applied,
     FirstInterview_Invited, FirstInterview_Accepted, FirstInterview_Rejected,

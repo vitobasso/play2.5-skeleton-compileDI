@@ -1,0 +1,35 @@
+@import models._
+@(candidates: Seq[Candidate])(implicit messages: Messages)
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>@Messages("list.title")</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    </head>
+    <body>
+
+        <h2>@Messages("form.title")</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>@Messages("profile.name")</th>
+                    <th>@Messages("profile.initialContact")</th>
+                    <th>@Messages("status")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @candidates.map { c =>
+                    <tr>
+                        <td>@c.profile.name</td>
+                        <td>@c.profile.initialContact</td>
+                        <td>@c.status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </body>
+</html>

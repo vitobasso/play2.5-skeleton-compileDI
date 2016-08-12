@@ -32,4 +32,6 @@ experience.architectureAndDesign=Architecture and Design
 experience.teamLeading=Team Leading
 status=Status
 
+list.title=Candidate List
+
 format.boolean=Boolean

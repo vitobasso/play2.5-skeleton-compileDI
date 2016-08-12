@@ -9,7 +9,7 @@ case class Profile(
                     country: String,
                     euWorker: Boolean,
                     availability: String,
-                    initialContactDate: LocalDate,
+                    initialContact: LocalDate,
                     expectedSalary: String,
                     ambition: String,
                     travel: String

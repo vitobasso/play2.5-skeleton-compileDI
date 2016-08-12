@@ -5,8 +5,11 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
+import play.modules.reactivemongo.json._
 import play.modules.reactivemongo.{MongoController, ReactiveMongoApi, ReactiveMongoComponents}
+import reactivemongo.api.ReadPreference
 import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -27,7 +30,7 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
       "country" -> text,
       "euWorker" -> boolean,
       "availability" -> text,
-      "initialContactDate" -> of(jodaLocalDateFormat("dd-MM-yyyy")),
+      "initialContact" -> of(jodaLocalDateFormat("dd-MM-yyyy")),
       "expectedSalary" -> text,
       "ambition" -> text,
       "travel" -> text
@@ -58,14 +61,14 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
 
   def hasEmailFormat: String => Boolean = _ matches "^[\\w\\d._%+-]+@[\\w\\d.-]+\\.[\\w]{2,}$"
 
-  def get = Action.async {
+  def showForm = Action.async {
     implicit request =>
       Future.successful(
         Ok(views.html.candidateForm(candidateForm))
       )
   }
 
-  def post = Action.async {
+  def submitForm = Action.async {
     implicit request =>
       candidateForm.bindFromRequest().fold(
         formWithErrors => {
@@ -78,6 +81,19 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
           futureResult.map(r => Ok(r.message))
         }
       )
+  }
+
+  def list = Action.async {
+    implicit request => {
+      collection.flatMap { jsCollection =>
+        val col: Future[Seq[Candidate]] = jsCollection.find(Json.obj())
+          .cursor[Candidate](ReadPreference.primary)
+          .collect[Seq]()
+        col.map { c => Ok(views.html.candidateList(c)) }
+      } recover {
+        case e: Exception => BadRequest(e.getMessage)
+      }
+    }
   }
 
 }
