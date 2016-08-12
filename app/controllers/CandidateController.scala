@@ -26,7 +26,8 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
       "age" -> number,
       "country" -> text,
       "euWorker" -> boolean,
-      "availability" -> of(jodaLocalDateFormat("dd-MM-yyyy")),
+      "availability" -> text,
+      "initialContactDate" -> of(jodaLocalDateFormat("dd-MM-yyyy")),
       "expectedSalary" -> text,
       "ambition" -> text,
       "travel" -> text

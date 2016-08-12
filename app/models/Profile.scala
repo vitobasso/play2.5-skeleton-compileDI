@@ -8,7 +8,8 @@ case class Profile(
                     age: Int,
                     country: String,
                     euWorker: Boolean,
-                    availability: LocalDate,
+                    availability: String,
+                    initialContactDate: LocalDate,
                     expectedSalary: String,
                     ambition: String,
                     travel: String
