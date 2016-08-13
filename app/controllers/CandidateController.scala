@@ -1,9 +1,9 @@
 package controllers
 
 import models.{Candidate, Contact, Experience, Profile}
+import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.format.Formats._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
@@ -30,13 +30,13 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
       "country" -> text,
       "euWorker" -> boolean,
       "availability" -> text,
-      "initialContact" -> of(jodaLocalDateFormat("dd-MM-yyyy")),
+      "initialContact" -> date("dd-MM-yyyy"),
       "expectedSalary" -> text,
       "ambition" -> text,
       "travel" -> text
     )(Profile.apply)(Profile.unapply),
     "contact" -> mapping(
-      "email" -> nonEmptyText.verifying(hasEmailFormat),
+      "email" -> email,
       "skype" -> optional(text),
       "phone" -> optional(text),
       "codeRepo" -> optional(text)
@@ -59,8 +59,6 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
     "status" -> of[models.Status]
   )(Candidate.apply)(Candidate.unapply))
 
-  def hasEmailFormat: String => Boolean = _ matches "^[\\w\\d._%+-]+@[\\w\\d.-]+\\.[\\w]{2,}$"
-
   def showForm = Action.async {
     implicit request =>
       Future.successful(
@@ -72,6 +70,7 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
     implicit request =>
       candidateForm.bindFromRequest().fold(
         formWithErrors => {
+          Logger.error(formWithErrors.errors.toString)
           Future.successful(
             BadRequest(views.html.candidateForm(candidateForm))
           )

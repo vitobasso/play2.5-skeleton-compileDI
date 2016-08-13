@@ -9,7 +9,7 @@ profile.age=Age
 profile.country=Country
 profile.euWorker=EU worker
 profile.availability=Availability
-profile.initialContactDate=Initial contact date
+profile.initialContact=Initial contact date
 profile.expectedSalary=Expected salary
 profile.ambition=Ambition
 profile.travel=Travel
@@ -31,6 +31,18 @@ experience.soloWorking=Solo Working
 experience.architectureAndDesign=Architecture and Design
 experience.teamLeading=Team Leading
 status=Status
+status.applied=Applied
+status.firstInterview.invited=Invited for 1st interview
+status.firstInterview.accepted=Accepted for 1st interview
+status.firstInterview.rejected=Rejected on 1st interview
+status.codeReview.invited=Invited for code review
+status.codeReview.accepted=Accepted for code review
+status.codeReview.rejected=Rejected fon code review
+status.secondInterview.invited=Invited for 2nd interview
+status.secondInterview.accepted=Accepted for 2nd interview
+status.secondInterview.rejected=Rejected on 2nd interview
+status.hired=Hired
+status.withdrew=Withdrew
 
 list.title=Candidate List
 

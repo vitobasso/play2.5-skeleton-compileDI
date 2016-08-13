@@ -1,6 +1,7 @@
 package models
 
-import org.joda.time.LocalDate
+import java.util.Date
+
 import play.api.libs.json.Json
 
 case class Profile(
@@ -9,7 +10,7 @@ case class Profile(
                     country: String,
                     euWorker: Boolean,
                     availability: String,
-                    initialContact: LocalDate,
+                    initialContact: Date,
                     expectedSalary: String,
                     ambition: String,
                     travel: String
