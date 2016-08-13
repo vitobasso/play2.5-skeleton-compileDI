@@ -1,4 +1,6 @@
 form.title=Candidate Form
+list.title=Candidate List
+
 form.profile=Personal Data
 form.contact=Contact Information
 form.experience=Education & Experience
@@ -43,7 +45,5 @@ status.secondInterview.accepted=Accepted for 2nd interview
 status.secondInterview.rejected=Rejected on 2nd interview
 status.hired=Hired
 status.withdrew=Withdrew
-
-list.title=Candidate List
 
 format.boolean=Boolean

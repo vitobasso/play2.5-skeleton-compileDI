@@ -72,7 +72,7 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
         formWithErrors => {
           Logger.error(formWithErrors.errors.toString)
           Future.successful(
-            BadRequest(views.html.candidateForm(candidateForm))
+            BadRequest(views.html.candidateForm(formWithErrors))
           )
         },
         candidate => {
