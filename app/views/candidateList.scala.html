@@ -1,7 +1,7 @@
 @import models._
+@import views.helpers._
 
 @(candidates: Seq[Candidate])(implicit messages: Messages)
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,27 +13,14 @@
 
         <h2>@Messages("list.title")</h2>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>@Messages("profile.name")</th>
-                    <th>@Messages("profile.initialContact")</th>
-                    <th>@Messages("status")</th>
-                </tr>
-            </thead>
-            <tbody>
-            @candidates.map { c =>
-                <tr>
-                    <td>@c.profile.name</td>
-                    <td>@c.profile.initialContact</td>
-                    <td>@{
-                        val display=c.status.toDisplayString
-                        Messages(s"status.$display")}
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+        @table(candidates)(
+            headers = Seq("profile.name",
+                "profile.initialContact",
+                "status"),
+            toRow = c => Seq(c.profile.name,
+                    c.profile.initialContact.toString,
+                    Messages(s"status.${c.status.toDisplayString}"))
+        )
 
     </body>
 </html>

@@ -1,0 +1,19 @@
+@(headers: Seq[String], rows: Seq[Seq[String]])(implicit messages: Messages)
+<table class="table table-striped">
+    <thead>
+        <tr>
+            @headers.map { header =>
+                <th>@Messages(header)</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+    @rows.map { row =>
+        <tr>
+            @row.map { cell =>
+                <td>@cell</td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
