@@ -14,48 +14,49 @@
 
         <h2>@Messages("form.title")</h2>
 
+        @implicitForm = @{cForm}
         @implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
         @b3.form(controllers.routes.CandidateController.submitForm) {
 
-                @fieldset("form.profile") {
-                    @text(cForm, "profile.name")
-                    @text(cForm, "profile.age")
-                    @text(cForm, "profile.country")
-                    @checkbox(cForm, "profile.euWorker")
-                    @text(cForm, "profile.availability")
-                    @text(cForm, "profile.initialContact")
-                    @text(cForm, "profile.expectedSalary")
-                    @text(cForm, "profile.ambition")
-                    @text(cForm, "profile.travel")
-                }
-
-                @fieldset("form.contact") {
-                    @text(cForm, "contact.email")
-                    @text(cForm, "contact.skype")
-                    @text(cForm, "contact.phone")
-                    @text(cForm, "contact.codeRepo")
-                }
-
-                @fieldset("form.experience"){
-                    @text(cForm, "experience.csEducation")
-                    @text(cForm, "experience.commercial")
-                    @text(cForm, "experience.consulting")
-                    @text(cForm, "experience.java")
-                    @text(cForm, "experience.scala")
-                    @text(cForm, "experience.multipleLanguages")
-                    @text(cForm, "experience.functional")
-                    @text(cForm, "experience.designPatterns")
-                    @text(cForm, "experience.concurrency")
-                    @text(cForm, "experience.teamWorking")
-                    @text(cForm, "experience.soloWorking")
-                    @text(cForm, "experience.architectureAndDesign")
-                    @text(cForm, "experience.teamLeading")
-                    @select(cForm, "status", Status.displayValues)
-                }
-
-                @b3.submit('class -> "btn btn-default"){@Messages("form.submit")}
-
+            @fieldset("form.profile") {
+                @text("profile.name")
+                @text("profile.age")
+                @text("profile.country")
+                @checkbox("profile.euWorker")
+                @text("profile.availability")
+                @text("profile.initialContact")
+                @text("profile.expectedSalary")
+                @text("profile.ambition")
+                @text("profile.travel")
             }
+
+            @fieldset("form.contact") {
+                @text("contact.email")
+                @text("contact.skype")
+                @text("contact.phone")
+                @text("contact.codeRepo")
+            }
+
+            @fieldset("form.experience"){
+                @text("experience.csEducation")
+                @text("experience.commercial")
+                @text("experience.consulting")
+                @text("experience.java")
+                @text("experience.scala")
+                @text("experience.multipleLanguages")
+                @text("experience.functional")
+                @text("experience.designPatterns")
+                @text("experience.concurrency")
+                @text("experience.teamWorking")
+                @text("experience.soloWorking")
+                @text("experience.architectureAndDesign")
+                @text("experience.teamLeading")
+                @select("status", Status.displayValues)
+            }
+
+            @b3.submit('class -> "btn btn-default"){@Messages("form.submit")}
+
+        }
 
     </body>
 </html>

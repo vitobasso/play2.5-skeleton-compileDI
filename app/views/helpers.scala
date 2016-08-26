@@ -9,16 +9,16 @@ import views.html.b3.B3FieldConstructor
   */
 object helpers {
 
-  def text[T](form: Form[T], fieldId: String)
-             (implicit messages: Messages, fc: B3FieldConstructor) =
+  def text[T](fieldId: String)
+             (implicit form: Form[T], messages: Messages, fc: B3FieldConstructor) =
     html.b3.text(form(fieldId), '_label -> Messages(fieldId))
 
-  def checkbox[T](form: Form[T], fieldId: String)
-                 (implicit messages: Messages, fc: B3FieldConstructor) =
+  def checkbox[T](fieldId: String)
+                 (implicit form: Form[T], messages: Messages, fc: B3FieldConstructor) =
     html.b3.checkbox(form(fieldId), '_label -> Messages(fieldId))
 
-  def select[T](form: Form[T], fieldId: String, options: Seq[String])
-               (implicit messages: Messages, fc: B3FieldConstructor) = {
+  def select[T](fieldId: String, options: Seq[String])
+               (implicit form: Form[T], messages: Messages, fc: B3FieldConstructor) = {
     def idAndLabel(optionId: String) = (optionId, Messages(s"$fieldId.$optionId"))
     html.b3.select(form(fieldId), options map idAndLabel)
   }
