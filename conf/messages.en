@@ -1,4 +1,5 @@
 form.title=Candidate Form
+form.action=New Candidate
 list.title=Candidate List
 
 form.profile=Personal Data

@@ -79,7 +79,9 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
         },
         candidate => {
           val futureResult = collection.flatMap(_.insert(candidate))
-          futureResult.map(r => Ok(r.message))
+          futureResult.map(r =>
+            Redirect(controllers.routes.CandidateController.list())
+          )
         }
       )
   }
