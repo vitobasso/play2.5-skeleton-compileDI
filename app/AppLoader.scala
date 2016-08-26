@@ -34,13 +34,14 @@ class AppComponents(context: Context)(implicit val ec: ExecutionContext)
   lazy val reactiveMongoApi = new DefaultReactiveMongoApi(context.initialConfiguration, applicationLifecycle)
 
   lazy val candidateController = new CandidateController(messageApi, reactiveMongoApi)
-  lazy val assetsController: Assets = new Assets(httpErrorHandler)
+  lazy val assets: Assets = new Assets(httpErrorHandler)
 
   // order matters - should be the same as routes file
   lazy val router = new Routes(
     httpErrorHandler,
     candidateController,
-    assetsController)
+    assets
+  )
 
 }
 
