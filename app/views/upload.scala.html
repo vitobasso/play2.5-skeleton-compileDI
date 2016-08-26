@@ -1,4 +1,5 @@
 @import models._
+@import views.html._
 
 @(cForm: Form[Candidate])(implicit messages: Messages)
 <!DOCTYPE html>
@@ -15,11 +16,10 @@
 
         @implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
         @b3.form(routes.CandidateController.upload, 'enctype -> "multipart/form-data") {
-            <fieldset>
-                <legend>@Messages("form.upload")</legend>
+            @fieldset("form.upload"){
                 <label class="control-label">@Messages("cv")</label>
                 <input id="upload-file" type="file" class="file" name="file" data-preview-file-type="text">
-            </fieldset>
+            }
         }
 
     </body>

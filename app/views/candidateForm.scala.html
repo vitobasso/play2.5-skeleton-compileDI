@@ -1,5 +1,6 @@
 @import models._
 @import views.helpers._
+@import views.html._
 
 @(cForm: Form[Candidate])(implicit messages: Messages)
 <!DOCTYPE html>
@@ -16,8 +17,7 @@
         @implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
         @b3.form(controllers.routes.CandidateController.submitForm) {
 
-                <fieldset>
-                    <legend>@Messages("form.profile")</legend>
+                @fieldset("form.profile") {
                     @text(cForm, "profile.name")
                     @text(cForm, "profile.age")
                     @text(cForm, "profile.country")
@@ -27,18 +27,16 @@
                     @text(cForm, "profile.expectedSalary")
                     @text(cForm, "profile.ambition")
                     @text(cForm, "profile.travel")
-                </fieldset>
+                }
 
-                <fieldset>
-                    <legend>@Messages("form.contact")</legend>
+                @fieldset("form.contact") {
                     @text(cForm, "contact.email")
                     @text(cForm, "contact.skype")
                     @text(cForm, "contact.phone")
                     @text(cForm, "contact.codeRepo")
-                </fieldset>
+                }
 
-                <fieldset>
-                    <legend>@Messages("form.experience")</legend>
+                @fieldset("form.experience"){
                     @text(cForm, "experience.csEducation")
                     @text(cForm, "experience.commercial")
                     @text(cForm, "experience.consulting")
@@ -53,7 +51,7 @@
                     @text(cForm, "experience.architectureAndDesign")
                     @text(cForm, "experience.teamLeading")
                     @select(cForm, "status", Status.displayValues)
-                </fieldset>
+                }
 
                 @b3.submit('class -> "btn btn-default"){@Messages("form.submit")}
 
