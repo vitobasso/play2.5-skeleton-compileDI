@@ -1,6 +1,7 @@
 form.title=Candidate Form
 form.action=New Candidate
 list.title=Candidate List
+form.upload=Upload File
 
 form.profile=Personal Data
 form.contact=Contact Information
@@ -34,6 +35,7 @@ experience.soloWorking=Solo Working
 experience.architectureAndDesign=Architecture and Design
 experience.teamLeading=Team Leading
 status=Status
+cv=CV
 status.applied=Applied
 status.firstInterview.invited=Invited for 1st interview
 status.firstInterview.accepted=Accepted for 1st interview

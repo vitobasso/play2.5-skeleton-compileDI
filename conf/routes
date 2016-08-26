@@ -6,7 +6,7 @@ GET     /form-show                  controllers.CandidateController.showForm
 POST    /form-submit                controllers.CandidateController.submitForm
 GET     /list                       controllers.CandidateController.list
 
-GET     /upload-page                 controllers.CandidateController.uploadPage
+GET     /upload-page                controllers.CandidateController.uploadPage
 POST    /upload                     controllers.CandidateController.upload
 
 # Map static resources from the /public folder to the /assets URL path

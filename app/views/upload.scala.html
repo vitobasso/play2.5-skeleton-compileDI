@@ -7,12 +7,19 @@
         <title>Upload Page</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap-fileinput/css/fileinput.css")">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="@routes.Assets.versioned("lib/bootstrap-fileinput/js/fileinput.min.js")"></script>
     </head>
     <body class="container">
 
-        @helper.form(action = routes.CandidateController.upload, 'enctype -> "multipart/form-data") {
-            <input type="file" name="file">
-            <input type="submit" value="Upload" >
+        @implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+        @b3.form(routes.CandidateController.upload, 'enctype -> "multipart/form-data") {
+            <fieldset>
+                <legend>@Messages("form.upload")</legend>
+                <label class="control-label">@Messages("cv")</label>
+                <input id="upload-file" type="file" class="file" name="file" data-preview-file-type="text">
+            </fieldset>
         }
 
     </body>
