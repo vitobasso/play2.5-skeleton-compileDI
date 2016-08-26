@@ -1,5 +1,7 @@
 package controllers
 
+import java.io.File
+
 import models.{Candidate, Contact, Experience, Profile}
 import play.api.Logger
 import play.api.data.Form
@@ -89,9 +91,23 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
           .cursor[Candidate](ReadPreference.primary)
           .collect[Seq]()
         col.map { c => Ok(views.html.candidateList(c)) }
-      } recover {
-        case e: Exception => BadRequest(e.getMessage)
       }
+    }
+  }
+
+  def uploadPage = Action.async {
+    implicit request =>
+      Future.successful(
+        Ok(views.html.upload(candidateForm))
+      )
+  }
+
+  def upload = Action(parse.multipartFormData) { request =>
+    request.body.file("file").map { file =>
+      file.ref.moveTo(new File(s"upload/${file.filename}"))
+      Ok("File uploaded")
+    }.getOrElse {
+      BadRequest("Missing file")
     }
   }
 
