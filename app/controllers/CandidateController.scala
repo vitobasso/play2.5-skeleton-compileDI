@@ -7,25 +7,17 @@ import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.{MongoController, ReactiveMongoApi, ReactiveMongoComponents}
-import reactivemongo.api.ReadPreference
-import reactivemongo.play.json.collection.JSONCollection
+import service.CandidateService
+import views.html
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: ReactiveMongoApi)
-                         (implicit ec: ExecutionContext)
+class CandidateController(val messagesApi: MessagesApi, val service: CandidateService)(implicit ec: ExecutionContext)
   extends Controller
-    with MongoController
-    with ReactiveMongoComponents
     with I18nSupport {
 
-  def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("candidates"))
-
-  val candidateForm: Form[Candidate] = Form(mapping(
+  val form: Form[Candidate] = Form(mapping(
     "profile" -> mapping(
       "name" -> nonEmptyText,
       "age" -> number,
@@ -64,43 +56,45 @@ class CandidateController(val messagesApi: MessagesApi, val reactiveMongoApi: Re
   def showForm = Action.async {
     implicit request =>
       Future.successful(
-        Ok(views.html.candidateForm(candidateForm))
+        Ok(html.candidateForm(form))
       )
   }
 
   def submitForm = Action.async {
     implicit request =>
-      candidateForm.bindFromRequest().fold(
+      form.bindFromRequest().fold(
         formWithErrors => {
           Logger.error(formWithErrors.errors.toString)
           Future.successful(
-            BadRequest(views.html.candidateForm(formWithErrors))
+            BadRequest(html.candidateForm(formWithErrors))
           )
         },
-        candidate => {
-          val futureResult = collection.flatMap(_.insert(candidate))
-          futureResult.map(r =>
+        candidate =>
+          service.insert(candidate).map(r =>
             Redirect(controllers.routes.CandidateController.list())
           )
-        }
       )
   }
 
   def list = Action.async {
-    implicit request => {
-      collection.flatMap { jsCollection =>
-        val col: Future[Seq[Candidate]] = jsCollection.find(Json.obj())
-          .cursor[Candidate](ReadPreference.primary)
-          .collect[Seq]()
-        col.map { c => Ok(views.html.candidateList(c)) }
+    implicit request =>
+      for (candidates <- service.list)
+        yield Ok(html.candidateList(candidates))
+  }
+
+  def edit(candidateId: Long) = Action.async {
+    implicit request =>
+      service.find(candidateId).map {
+        case None => BadRequest(s"Candidate not found with id=$candidateId")
+        case Some(candidate) =>
+          Ok(html.candidateForm(form.fill(candidate)))
       }
-    }
   }
 
   def uploadPage = Action.async {
     implicit request =>
       Future.successful(
-        Ok(views.html.upload(candidateForm))
+        Ok(views.html.upload(form))
       )
   }
 

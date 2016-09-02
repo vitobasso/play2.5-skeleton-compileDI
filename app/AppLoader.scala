@@ -5,6 +5,7 @@ import play.api.cache.EhCacheComponents
 import play.api.i18n.{DefaultLangs, DefaultMessagesApi}
 import play.modules.reactivemongo.DefaultReactiveMongoApi
 import router.Routes
+import service.CandidateService
 
 import scala.concurrent.ExecutionContext
 
@@ -33,7 +34,8 @@ class AppComponents(context: Context)(implicit val ec: ExecutionContext)
   lazy val messageApi = new DefaultMessagesApi(environment, configuration, langs)
   lazy val reactiveMongoApi = new DefaultReactiveMongoApi(context.initialConfiguration, applicationLifecycle)
 
-  lazy val candidateController = new CandidateController(messageApi, reactiveMongoApi)
+  lazy val candidateService = new CandidateService(reactiveMongoApi)
+  lazy val candidateController = new CandidateController(messageApi, candidateService)
   lazy val assets: Assets = new Assets(httpErrorHandler)
 
   // order matters - should be the same as routes file
